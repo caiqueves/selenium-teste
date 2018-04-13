@@ -41,10 +41,10 @@ public class TestarLogin {
 	 senha.sendKeys("12345");
 	 
 	 driver.findElement(By.xpath("//*[@id=\"formlogin\"]/div[5]/button")).click();
-	 
+	 driver.navigate().refresh();
 	 teste = driver.getCurrentUrl();
 	 
-	 if (teste == "http://barraca248.rf.gd/admin/admin.php")
+	 if (teste.equals("http://barraca248.rf.gd/admin/admin.php")) 
 	 {
 		 obtido = false; 
 	 }
