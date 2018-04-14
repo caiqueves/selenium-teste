@@ -10,7 +10,7 @@ import org.openqa.selenium.interactions.SendKeysAction;
 
 import Util.AbriNavegador;
 
-public class TestarCadPagClientNotFound {
+public class TestarCadPagClientFound {
 	AbriNavegador abrir = new AbriNavegador();
 
 	@Before
@@ -22,7 +22,7 @@ public class TestarCadPagClientNotFound {
 	public void testandoCadastramentoCategoria() throws Exception {
 		boolean obtido01 = false;
 		boolean obtido02 = false;
-		WebElement login, senha;
+		WebElement login, senha, valormensagem;
 
 		login = abrir.driver.findElement(By.id("login"));
 		login.sendKeys("admin");
@@ -41,17 +41,19 @@ public class TestarCadPagClientNotFound {
 		if (obtido01) {
 			abrir.driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[5]/div/a")).click();
 
-			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/pagamentos.php")) {
+			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/pagamentos.php")) 
+			{
 				abrir.driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a")).click();
 
-				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarpagamento.php")) {
-
+				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarpagamento.php")) 
+				{
 					WebElement cliente = abrir.driver.findElement(By.id("cliente"));
-					cliente.sendKeys("caique");
+					cliente.sendKeys("ana teste");
 
-					String valor = abrir.driver.findElement(By.name("<div class=\"alert alert-danger\" role=\"alert\">Nenhum cliente encontrado!</div>")).getText();
+					valormensagem = abrir.driver.findElement(By.className("nome"));
 
-					if (valor.equals("Nenhum cliente encontrado!")) {
+					if (valormensagem.getText().equals("Ana Teste")) 
+					{
 						obtido02 = true;
 					} else {
 						obtido02 = false;
