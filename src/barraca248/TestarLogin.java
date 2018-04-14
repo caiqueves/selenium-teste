@@ -1,65 +1,55 @@
 package barraca248;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 
 
 public class TestarLogin {
+    AbriNavegador abrir = new AbriNavegador();
     
-	private WebDriver driver;
-    private boolean esperado = true;
+	private boolean esperado = true;
     private boolean obtido ;
     
 	@Before
 	public void abrirNavegador() {
-
-		System.setProperty("webdriver.chrome.driver", "./Resource/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.get("http://barraca248.rf.gd/admin/index.php");
-		driver.manage().window().maximize();
-		
-		//AbrindoNavegador abrir = new AbrindoNavegador();
-		//abrir.abrindoNavegador();
-
+		abrir.AbrindoNavegador("http://barraca248.rf.gd/login.php");
 	}
    @Test
    public void testandoLogin() 
    {
-	 String teste = "";  
-	 WebElement login = driver.findElement(By.id("usuario")); 
+	 String url = "";  
+	 WebElement login = abrir.driver.findElement(By.id("login")); 
 	 login.sendKeys("admin");
 	 
-	 WebElement senha = driver.findElement(By.id("senha")); 
+	 WebElement senha = abrir.driver.findElement(By.id("senha")); 
 	 senha.sendKeys("12345");
 	 
-	 driver.findElement(By.xpath("//*[@id=\"formlogin\"]/div[5]/button")).click();
-	 driver.navigate().refresh();
-	 teste = driver.getCurrentUrl();
+	 abrir.driver.findElement(By.xpath("//*[@id=\"formlogin\"]/div[4]/button[2]")).click();
+	 abrir.driver.navigate().refresh();
+	 url = abrir.driver.getCurrentUrl();
 	 
-	 if (teste.equals("http://barraca248.rf.gd/admin/admin.php")) 
+	 if (url.equals("http://barraca248.rf.gd/admin/admin.php")) 
 	 {
-		 obtido = false; 
+		 obtido = true; 
 	 }
 	 else
 	 {
-		 obtido = true;
+		 obtido = false;
 	 }
 	 
-	 assertEquals("ct02",esperado,obtido);
+	 assertEquals("CT_TestarLogin",esperado,obtido);
    }
 	 
    @After
    public void fecharPagina() throws InterruptedException
    {
    Thread.sleep(12000);	   
-   driver.quit();
+   abrir.driver.quit();
    }
 }
