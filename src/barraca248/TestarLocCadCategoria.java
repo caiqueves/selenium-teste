@@ -7,24 +7,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import Util.*;
 
-public class TestarLogin {
+import Util.AbriNavegador;
+
+public class TestarLocCadCategoria {
 	AbriNavegador abrir = new AbriNavegador();
-   
-	
-	private WebElement login,senha;
-	
+
 	@Before
-	public void abrindoNavegador() {
+	public void abrirNavegador() {
 		abrir.AbrindoNavegador("http://barraca248.rf.gd/login.php");
 	}
 
 	@Test
-	public void testandoLogin() {
-		
+	public void testandoCadastramentoCategoria() throws Exception {
 		boolean obtido;
-		
+		WebElement login, senha;
+
 		login = abrir.driver.findElement(By.id("login"));
 		login.sendKeys("admin");
 
@@ -38,7 +36,23 @@ public class TestarLogin {
 		} else {
 			obtido = false;
 		}
-		assertEquals(true, obtido);
+
+		if (obtido) {
+			abrir.driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[2]/div/a")).click();
+
+			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/categorias.php")) {
+				abrir.driver.findElement(By.className("addnovo")).click();
+
+				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarcategoria.php")) {
+                    
+					obtido = true;
+				}
+				else {
+					obtido = false;
+				}
+	        }
+		}
+		assertEquals(true,obtido);
 	}
 
 	@After
@@ -46,4 +60,5 @@ public class TestarLogin {
 		Thread.sleep(12000);
 		abrir.driver.quit();
 	}
+
 }
