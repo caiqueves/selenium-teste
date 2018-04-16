@@ -1,28 +1,29 @@
 package barraca248;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+
 import Util.AbriNavegador;
 
 
-public class TestarLocCadCategoria {
-	AbriNavegador abrir = new AbriNavegador();
+public class TestarPesquisaCliente {
 	
+	AbriNavegador abrir = new AbriNavegador();
 
+	
 	@Before
 	public void abrirNavegador() {
 		abrir.AbrindoNavegador("http://barraca248.rf.gd/login.php");
 	}
-
+	
 	@Test
-	public void testandoCadastramentoCategoria() throws Exception {
-		boolean obtido = false;
+	public void testandoPesquisaCliente() {
+		
+		//boolean obtido = false;
 		boolean obtido01 = false;
 		WebElement login, senha;
 
@@ -41,26 +42,39 @@ public class TestarLocCadCategoria {
 		}
 		
 		if (obtido01) {
-			abrir.driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[2]/div/a")).click();
+			
+			abrir.driver.findElement(By.xpath("/html/body/div/div[3]/div[3]/div/a")).click();
+			
+			WebElement campoPesquisa = abrir.driver.findElement(By.id("pesqcliente"));
+			campoPesquisa.sendKeys("caique");
+			
+			abrir.driver.findElement(By.xpath("/html/body/div/div[3]/div[3]/div/a")).click();
+			
+			/*WebDriverWait wait = new WebDriverWait(abrir.driver, 1);
+			String text03 = (wait
+					.until(ExpectedConditions
+							.presenceOfElementLocated(By.cssSelector("#tabelacliente > tbody > tr > td.nome")))
+					.getText());*/
 
-			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/categorias.php")) {
-				abrir.driver.findElement(By.className("addnovo")).click();
-
-				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarcategoria.php")) {
-
-					obtido = true;
-				} else {
-					obtido = false;
-				}
+			String retorno = abrir.driver.findElement(By.cssSelector("#tabelapesqcliente > div")).getText();
+			if (retorno.equals("Nenhum cliente encontrado!")) {
+				//
 			}
 		}
-		assertEquals(true, obtido);
 	}
-
+	
 	@After
 	public void fecharPagina() throws InterruptedException {
 		Thread.sleep(12000);
 		abrir.driver.quit();
 	}
-
+		
+		
+		
+		
+		
+		
+		
+		
+	
 }

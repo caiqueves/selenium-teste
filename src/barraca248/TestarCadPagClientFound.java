@@ -2,16 +2,19 @@ package barraca248;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.SendKeysAction;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import Util.AbriNavegador;
+import Util.*;
 
 public class TestarCadPagClientFound {
 	AbriNavegador abrir = new AbriNavegador();
+	
 
 	@Before
 	public void abrirNavegador() {
@@ -20,9 +23,9 @@ public class TestarCadPagClientFound {
 
 	@Test
 	public void testandoCadastramentoCategoria() throws Exception {
+		boolean obtido = false;
 		boolean obtido01 = false;
-		boolean obtido02 = false;
-		WebElement login, senha, valormensagem;
+		WebElement login, senha;
 
 		login = abrir.driver.findElement(By.id("login"));
 		login.sendKeys("admin");
@@ -37,30 +40,38 @@ public class TestarCadPagClientFound {
 		} else {
 			obtido01 = false;
 		}
-
+		
 		if (obtido01) {
 			abrir.driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[5]/div/a")).click();
 
-			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/pagamentos.php")) 
-			{
+			if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/pagamentos.php")) {
 				abrir.driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a")).click();
 
-				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarpagamento.php")) 
-				{
+				if (abrir.RetornarUrl().equals("http://barraca248.rf.gd/admin/cadastrarpagamento.php")) {
 					WebElement cliente = abrir.driver.findElement(By.id("cliente"));
 					cliente.sendKeys("ana teste");
 
-					valormensagem = abrir.driver.findElement(By.className("nome"));
+					WebDriverWait wait = new WebDriverWait(abrir.driver, 1);
+					String text03 = (wait
+							.until(ExpectedConditions
+									.presenceOfElementLocated(By.cssSelector("#tabelacliente > tbody > tr > td.nome")))
+							.getText());
 
-					if (valormensagem.getText().equals("Ana Teste")) 
-					{
-						obtido02 = true;
+					if (text03.equals("Ana Teste")) {
+						obtido = true;
 					} else {
-						obtido02 = false;
+						obtido = false;
 					}
 				}
 			}
-			assertEquals(true, obtido02);
+			assertEquals(true, obtido);
 		}
 	}
+	
+	@After
+	public void fecharPagina() throws InterruptedException {
+		Thread.sleep(12000);
+		abrir.driver.quit();
+	}
+
 }

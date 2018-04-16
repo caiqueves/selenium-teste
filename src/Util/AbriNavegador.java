@@ -1,11 +1,12 @@
 package Util;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class AbriNavegador {
    public WebDriver driver;
-   private String url;
+   public String url;
    
    public void AbrindoNavegador(String site ) {
 	   System.setProperty("webdriver.chrome.driver", "./Resource/chromedriver.exe");
@@ -14,10 +15,10 @@ public class AbriNavegador {
 		driver.manage().window().maximize();
    }
    
-   public String RetornarUrl()
-   {
-	    driver.navigate().refresh();
+   public String RetornarUrl() {
+		driver.navigate().refresh();
 		url = driver.getCurrentUrl();
-        return url;
-   }
+		return url;
+	}
+ 
 }
