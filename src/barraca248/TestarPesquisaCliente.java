@@ -1,11 +1,14 @@
 package barraca248;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Util.AbriNavegador;
 
@@ -22,9 +25,10 @@ public class TestarPesquisaCliente {
 	
 	@Test
 	public void testandoPesquisaCliente() {
-		
-		//boolean obtido = false;
+
 		boolean obtido01 = false;
+		boolean obtido02 = false;
+		
 		WebElement login, senha;
 
 		login = abrir.driver.findElement(By.id("login"));
@@ -48,19 +52,22 @@ public class TestarPesquisaCliente {
 			WebElement campoPesquisa = abrir.driver.findElement(By.id("pesqcliente"));
 			campoPesquisa.sendKeys("caique");
 			
-			abrir.driver.findElement(By.xpath("/html/body/div/div[3]/div[3]/div/a")).click();
-			
-			/*WebDriverWait wait = new WebDriverWait(abrir.driver, 1);
+			WebDriverWait wait = new WebDriverWait(abrir.driver, 1);
 			String text03 = (wait
 					.until(ExpectedConditions
-							.presenceOfElementLocated(By.cssSelector("#tabelacliente > tbody > tr > td.nome")))
-					.getText());*/
-
-			String retorno = abrir.driver.findElement(By.cssSelector("#tabelapesqcliente > div")).getText();
-			if (retorno.equals("Nenhum cliente encontrado!")) {
-				//
+							.presenceOfElementLocated(By.cssSelector("#tabelapesqcliente > div")))
+					.getText());
+			
+			if (text03.equals("Nenhum cliente encontrado!")) {
+				obtido02 = false;
 			}
+			else
+			{
+				obtido02 = true;
+			}
+		    
 		}
+		assertEquals(true, obtido02);
 	}
 	
 	@After
